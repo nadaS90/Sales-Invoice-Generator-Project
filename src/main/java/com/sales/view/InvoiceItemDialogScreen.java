@@ -29,8 +29,8 @@ public class InvoiceItemDialogScreen extends JDialog{
         okBtn = new JButton("OK");
         cancelBtn = new JButton("Cancel");
         
-        okBtn.setActionCommand("createItemOK");
-        cancelBtn.setActionCommand("createItemCancel");
+        okBtn.setActionCommand("Create Item Ok");
+        cancelBtn.setActionCommand("Create Item Cancel");
         
         okBtn.addActionListener(frme.getControllerClass());
         cancelBtn.addActionListener(frme.getControllerClass());

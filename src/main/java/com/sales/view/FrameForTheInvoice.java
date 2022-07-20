@@ -36,6 +36,7 @@ public class FrameForTheInvoice extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         invoiceTable = new javax.swing.JTable();
         invoiceTable.getSelectionModel().addListSelectionListener(controllerClass);
+        invoiceTable.setModel(getInvoicesTableModel());
         createNewInvoiceBtn = new javax.swing.JButton();
         createNewInvoiceBtn.addActionListener(controllerClass);
         deleteNewInvoiceBtn = new javax.swing.JButton();
@@ -351,7 +352,7 @@ private InvoiceTable invoicesTableModel;
     public int getNextInvoiceNumber() {
         int number =0;
         
-        for(InvoiceClass invoce : invoice){
+        for(InvoiceClass invoce : getInvoice()){
             if (invoce.getInvoiceNumber() > number) number = invoce.getInvoiceNumber();
             
         }

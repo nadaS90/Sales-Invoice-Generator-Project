@@ -1,7 +1,7 @@
 package com.sales.model;
 
 public class ItemsClass {
-    
+
     private String itemName;
     private double price;
     private int amount;
@@ -16,9 +16,9 @@ public class ItemsClass {
         this.amount = amount;
         this.invoice = invoice;
     }
-    
-    public double getItemsTotal(){
-    return  price * amount;
+
+    public double getItemsTotal() {
+        return price * amount;
     }
 
     public int getAmount() {
@@ -28,8 +28,6 @@ public class ItemsClass {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-
-   
 
     public String getItemName() {
         return itemName;
@@ -49,12 +47,14 @@ public class ItemsClass {
 
     @Override
     public String toString() {
-        return "ItemsClass{" + "itemNumber=" + invoice.getNumber()+ ", itemName=" + itemName + ", price=" + price + ", amount=" + amount + '}';
+        return "ItemsClass{" + "itemNumber=" + invoice.getNumber() + ", itemName=" + itemName + ", price=" + price + ", amount=" + amount + '}';
     }
 
     public InvoiceClass getInvoice() {
         return invoice;
     }
-    
-    
+
+    public String getFileCSV() {
+        return invoice.getNumber() + "," + itemName + "," + price + "," + amount;
+    }
 }

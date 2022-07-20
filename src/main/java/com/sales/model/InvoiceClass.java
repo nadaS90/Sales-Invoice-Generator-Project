@@ -2,9 +2,8 @@ package com.sales.model;
 
 import java.util.ArrayList;
 
-
 public class InvoiceClass {
-    
+
     private int number;
     private String date;
     private String customer;
@@ -22,18 +21,18 @@ public class InvoiceClass {
     public int getInvoiceNumber() {
         return number;
     }
-    
-    public double getInvoiceTotal(){
+
+    public double getInvoiceTotal() {
         double total = 0.0;
-        for(ItemsClass item : getItems()){
+        for (ItemsClass item : getItems()) {
             total += item.getItemsTotal();
         }
-        return total; 
+        return total;
     }
 
     public ArrayList<ItemsClass> getItems() {
         if (items == null) {
-            items = new ArrayList<>();  
+            items = new ArrayList<>();
         }
         return items;
     }
@@ -66,5 +65,8 @@ public class InvoiceClass {
     public String toString() {
         return "InvoiceClass{" + "number=" + number + ", date=" + date + ", customer=" + customer + ", items=" + items + '}';
     }
-    
+
+    public String getFileCSV() {
+        return number + "," + date + "," + customer;
+    }
 }
