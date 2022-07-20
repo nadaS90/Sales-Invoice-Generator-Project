@@ -182,7 +182,8 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
         
         if(selectedInvoice != -1 && selectedItem != -1){
             InvoiceClass invoice = invFrame.getInvoice().get(selectedInvoice);
-              invFrame.getInvoice().remove(selectedRow);
+              invoice.getItems().remove(selectedItem);
+              invFrame.getInvoice().remove(selectedItem);
               invFrame.getInvoicesTableModel().fireTableDataChanged();
         }
         
