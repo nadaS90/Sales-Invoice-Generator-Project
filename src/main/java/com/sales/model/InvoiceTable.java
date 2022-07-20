@@ -33,7 +33,7 @@ public class InvoiceTable extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                return invce.getInvoiceNumber();
+                return invce.getNumber();
             case 1:
                 return invce.getDate();
             case 2:
@@ -47,8 +47,8 @@ public class InvoiceTable extends AbstractTableModel {
 
     }
 
-    public void setModel(InvoiceTable InvoiceTable) {
+ //   public void setModel(InvoiceTable InvoiceTable) {
         
-    }
+//    }
 
 }

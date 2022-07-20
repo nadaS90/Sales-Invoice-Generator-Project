@@ -36,7 +36,7 @@ public class ItemsTable extends AbstractTableModel{
         
         switch(columnIndex) {
             case 0:
-                return itms.getInvoice().getInvoiceNumber();
+                return itms.getInvoice().getNumber();
             case 1:
                 return itms.getItemName();
             case 2:

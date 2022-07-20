@@ -5,6 +5,8 @@ import com.sales.model.InvoiceTable;
 import com.sales.model.ItemsClass;
 import com.sales.model.ItemsTable;
 import com.sales.view.FrameForTheInvoice;
+import com.sales.view.InvoiceDialogScreen;
+import com.sales.view.InvoiceItemDialogScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,12 +19,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class ControllerClass implements ActionListener, ListSelectionListener{
 
     private FrameForTheInvoice invFrame;
+    private InvoiceDialogScreen invScreen;
+    private InvoiceItemDialogScreen itmScreen;
     
     public ControllerClass(FrameForTheInvoice invFrame){
     this.invFrame = invFrame;
@@ -58,14 +63,32 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
                 deleteInvoice();
                 break;
             
-            case "Save":
-                saveItem();
+             case "Create New Ieme":
+                 createNewItem();
+                 
                 break;
             
-            case "Cancel":
-                cancelItem();
+            case "Delete Item":
+                deleteItem();
+                break;
+           
+                
+            case "Create New Invoice OK":
+                createInvoiceOK();
                 break;
             
+            case "Create New Invoice Cancel":
+                createInvoiceCancel();
+                break;
+            
+            case "Create Item Ok":
+                createItemOK();
+                break;
+            
+            case "Create Item Cancel":
+                createItemCancel();
+                break;
+              
         }
     }
 
@@ -76,7 +99,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
           if(theSelectedIndex != -1){
           System.out.println("You have selectrow No.:" + theSelectedIndex);
           InvoiceClass curntInvoice = invFrame.getInvoice().get(theSelectedIndex);
-          invFrame.getLabelInvoiceNo().setText("" + curntInvoice.getInvoiceNumber());
+          invFrame.getLabelInvoiceNo().setText("" + curntInvoice.getNumber());
           invFrame.getLabelInvoiceDate().setText(curntInvoice.getDate());
           invFrame.getLabelCustomerName().setText(curntInvoice.getCustomer());
           invFrame.getLabelInvoiceTotal().setText("" + curntInvoice.getInvoiceTotal());
@@ -101,6 +124,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
             ArrayList<InvoiceClass> invArray = new ArrayList<>();
             
             for(String headerDataa : headerData){
+                try{
                 String[] headerDetails = headerDataa.split(",");
                 int invoiceNo = Integer.parseInt(headerDetails[0]);
                 String invoiceDte = headerDetails[1];
@@ -112,6 +136,10 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
             //    3,20-12-2021,Samy
                 invArray.add(invoice);
             }
+                catch (Exception ex) {
+                        JOptionPane.showMessageDialog(invFrame, "Error in line format file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+            }
                 System.out.println("We are fine");
                 theResult = fch.showOpenDialog(invFrame);
                 
@@ -122,6 +150,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
                     System.out.println("The Items read successfully");
                     
                     for(String lineDataa : lineData){
+                        try{
                         String[] lineDetails = lineDataa.split(",");
                         int invoiceNo = Integer.parseInt(lineDetails[0]);
                         String itmNAme = lineDetails[1];
@@ -140,6 +169,11 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
                         ItemsClass items = new ItemsClass(itmNAme, itmPrices, amount, invv);
                         invv.getItems().add(items);
                     }
+                        catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(invFrame, "Error in line format file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
                     System.out.println("We are fine till here");
                 }     
                  
@@ -152,7 +186,9 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
                
             }
         }catch (IOException ex) {
-                 ex.printStackTrace();        
+                 ex.printStackTrace();  
+                 JOptionPane.showMessageDialog(invFrame, "file format is not recognized", "Error", JOptionPane.ERROR_MESSAGE);
+
                  
         }       
         }
@@ -162,6 +198,9 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
     }
 
     private void createNewInvoice() {
+        invScreen = new InvoiceDialogScreen(invFrame);
+        invScreen.setVisible(true);
+        
     }
 
     private void deleteInvoice() {
@@ -172,21 +211,65 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
         }
     }
 
-    private void saveItem() {
-    }
-
-    private void cancelItem() {
+    private void createNewItem() {
+      
+}
+        
+    private void deleteItem() {
         int selectedInvoice = invFrame.getInvoiceTable().getSelectedRow();
         int selectedItem = invFrame.getInvoiceItems().getSelectedRow();
         
         
         if(selectedInvoice != -1 && selectedItem != -1){
-            InvoiceClass invoice = invFrame.getInvoice().get(selectedInvoice);
+              InvoiceClass invoice = invFrame.getInvoice().get(selectedInvoice);
               invoice.getItems().remove(selectedItem);
-              invFrame.getInvoice().remove(selectedItem);
-              invFrame.getInvoicesTableModel().fireTableDataChanged();
+              ItemsTable itemsTable = new ItemsTable(invoice.getItems());
+              invFrame.getInvoiceItems().setModel(itemsTable);
+              itemsTable.fireTableDataChanged();
         }
         
+    }
+
+    private void createInvoiceOK() {
+        String date = invScreen.getInvoiceDateField().getText();
+        String customer = invScreen.getCustomerNameField().getText();
+        int number = invFrame.getNextInvoiceNumber();
+        try{
+            String[] dateParts = date.split("-");
+            if (dateParts.length < 3) {
+                JOptionPane.showMessageDialog(invFrame, "please enter correct date format", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int day = Integer.parseInt(dateParts[0]);
+                int month = Integer.parseInt(dateParts[1]);
+                int year = Integer.parseInt(dateParts[2]);
+                if (day > 31 || month > 12) {
+                    JOptionPane.showMessageDialog(invFrame, "please enter correct date format", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    
+        InvoiceClass invoice = new InvoiceClass(number, date, customer);
+        invFrame.getInvoice().add(invoice);
+        invFrame.getInvoicesTableModel().fireTableDataChanged();
+        
+        invScreen.setVisible(false);
+        invScreen.dispose();
+        invScreen = null;
+    }
+            }
+            }catch(Exception ex) {
+            JOptionPane.showMessageDialog(invFrame, "please enter correct date format", "Error", JOptionPane.ERROR_MESSAGE);
+}
+    }
+
+    private void createInvoiceCancel() {
+        invScreen.setVisible(false);
+        invScreen.dispose();
+        invScreen = null;
+ }
+
+    private void createItemOK() {
+    }
+
+    private void createItemCancel() {
     }
 
   

@@ -49,7 +49,7 @@ public class ItemsClass {
 
     @Override
     public String toString() {
-        return "ItemsClass{" + "itemNumber=" + invoice.getInvoiceNumber() + ", itemName=" + itemName + ", price=" + price + ", amount=" + amount + '}';
+        return "ItemsClass{" + "itemNumber=" + invoice.getNumber()+ ", itemName=" + itemName + ", price=" + price + ", amount=" + amount + '}';
     }
 
     public InvoiceClass getInvoice() {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class InvoiceClass {
     
-    private int invoiceNumber;
+    private int number;
     private String date;
     private String customer;
     private ArrayList<ItemsClass> items;
@@ -14,13 +14,13 @@ public class InvoiceClass {
     }
 
     public InvoiceClass(int number, String date, String customer) {
-        this.invoiceNumber = number;
+        this.number = number;
         this.date = date;
         this.customer = customer;
     }
 
     public int getInvoiceNumber() {
-        return invoiceNumber;
+        return number;
     }
     
     public double getInvoiceTotal(){
@@ -47,11 +47,11 @@ public class InvoiceClass {
     }
 
     public int getNumber() {
-        return invoiceNumber;
+        return number;
     }
 
     public void setNumber(int number) {
-        this.invoiceNumber = number;
+        this.number = number;
     }
 
     public String getDate() {
@@ -60,6 +60,11 @@ public class InvoiceClass {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceClass{" + "number=" + number + ", date=" + date + ", customer=" + customer + ", items=" + items + '}';
     }
     
 }
