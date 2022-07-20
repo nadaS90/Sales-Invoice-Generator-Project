@@ -176,6 +176,17 @@ public class ControllerClass implements ActionListener, ListSelectionListener{
     }
 
     private void cancelItem() {
+        int selectedInvoice = invFrame.getInvoiceTable().getSelectedRow();
+        int selectedItem = invFrame.getInvoiceItems().getSelectedRow();
+        
+        
+        if(selectedInvoice != -1 && selectedItem != -1){
+            InvoiceClass invoice = invFrame.getInvoice().get(selectedInvoice);
+              invoice.getitems
+              invFrame.getInvoice().remove(selectedRow);
+              invFrame.getInvoicesTableModel().fireTableDataChanged();
+        }
+        
     }
 
   
