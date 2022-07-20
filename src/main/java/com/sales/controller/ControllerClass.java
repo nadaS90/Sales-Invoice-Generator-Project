@@ -131,7 +131,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener {
                         //    3,20-12-2021,Samy
                         invArray.add(invoice);
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(invFrame, "Error in line format file", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(invFrame, "Error in file format", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 System.out.println("We are fine");
@@ -164,7 +164,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener {
                             invv.getItems().add(items);
                         } catch (Exception ex) {
                             ex.printStackTrace();
-                            JOptionPane.showMessageDialog(invFrame, "Error in line format file", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(invFrame, "Error in file format", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                     System.out.println("We are fine till here");
@@ -179,7 +179,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(invFrame, "file format is not recognized", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(invFrame, "Error in file format", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -199,7 +199,7 @@ public class ControllerClass implements ActionListener, ListSelectionListener {
                 lineFile += "\n";
             }
         }
-        System.out.println("we are safe here");
+       // System.out.println("we are safe here");
         try {
             JFileChooser fch = new JFileChooser();
             int result = fch.showSaveDialog(invFrame);
